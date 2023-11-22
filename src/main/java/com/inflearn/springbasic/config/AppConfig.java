@@ -2,6 +2,7 @@ package com.inflearn.springbasic.config;
 
 import com.inflearn.springbasic.discount.DiscountPolicy;
 import com.inflearn.springbasic.discount.FixDiscountPolicy;
+import com.inflearn.springbasic.discount.RateDiscountPolicy;
 import com.inflearn.springbasic.member.MemberRepository;
 import com.inflearn.springbasic.member.MemberService;
 import com.inflearn.springbasic.member.MemberServiceImpl;
@@ -31,6 +32,12 @@ public class AppConfig {
     }
 
     public DiscountPolicy discountPolicy(){
-        return new FixDiscountPolicy();
+
+        //구현 영역에서 사용 객체 변경
+        //애플리케이션의 사용 영역은 어떠한 코드도 변경할 필요 없다.
+
+        //할인 정책 변경
+//        return new FixDiscountPolicy();
+        return new RateDiscountPolicy();
     }
 }
