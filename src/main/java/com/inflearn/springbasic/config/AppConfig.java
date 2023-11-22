@@ -1,6 +1,8 @@
 package com.inflearn.springbasic.config;
 
+import com.inflearn.springbasic.discount.DiscountPolicy;
 import com.inflearn.springbasic.discount.FixDiscountPolicy;
+import com.inflearn.springbasic.member.MemberRepository;
 import com.inflearn.springbasic.member.MemberService;
 import com.inflearn.springbasic.member.MemberServiceImpl;
 import com.inflearn.springbasic.member.MemoryMemberRepository;
@@ -12,12 +14,23 @@ import com.inflearn.springbasic.order.OrderServiceImpl;
 //Dependency Injection
 public class AppConfig {
 
+    //리팩토링 후
+    //중복 코드 제거 (new MemoryMemberRepository() 제거)
+    //애플리케이션 전체 구성이 어떻게 되어있는지 파악 가능
     public MemberService memberService(){
-        return new MemberServiceImpl(new MemoryMemberRepository());
+        return new MemberServiceImpl(memberRepository());
+    }
+
+    public MemberRepository memberRepository(){
+        return new MemoryMemberRepository();
     }
 
     public OrderService orderService(){
         return new OrderServiceImpl(
-            new MemoryMemberRepository(), new FixDiscountPolicy());
+            memberRepository(), discountPolicy());
+    }
+
+    public DiscountPolicy discountPolicy(){
+        return new FixDiscountPolicy();
     }
 }
