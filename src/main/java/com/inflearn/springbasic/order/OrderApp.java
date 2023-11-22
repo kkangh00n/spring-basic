@@ -1,15 +1,17 @@
 package com.inflearn.springbasic.order;
 
+import com.inflearn.springbasic.config.AppConfig;
 import com.inflearn.springbasic.member.Grade;
 import com.inflearn.springbasic.member.Member;
 import com.inflearn.springbasic.member.MemberService;
-import com.inflearn.springbasic.member.MemberServiceImpl;
 
 public class OrderApp {
 
     public static void main(String[] args) {
-        MemberService memberService = new MemberServiceImpl();
-        OrderService orderService = new OrderServiceImpl();
+        //AppConfig에서 의존성 주입
+        AppConfig appConfig = new AppConfig();
+        MemberService memberService = appConfig.memberService();
+        OrderService orderService = appConfig.orderService();
 
         long memberId = 1L;
         Member member = new Member(memberId, "memberA", Grade.VIP);
